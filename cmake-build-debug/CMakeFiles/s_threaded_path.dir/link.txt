@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/s_threaded_path.dir/main.cpp.o  -o s_threaded_path 

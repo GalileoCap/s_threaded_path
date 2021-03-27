@@ -7,10 +7,12 @@
 
 using namespace std;
 
+thread Threads[3];
+
 time_t start;
 
 void test(const string& s) {
-    sleep(3);
+    sleep(5);
     time_t end = time(0) - start;
     cout << s << " IN " << end << endl;
 }
@@ -18,11 +20,14 @@ void test(const string& s) {
 int main() {
     start = time(0);
 
-    thread t = thread(&test, "DONE");
+    for (thread& t : Threads) {
+        t = thread(&test, "DONE");
+        sleep(1); //U: We should see all outputs with one second in between
+    }
 
     cout << "WAITING..." << endl;
 
-    t.join();
+    for (thread &t : Threads) { t.join(); }
 
     cout << "FINISHED" << endl;
 

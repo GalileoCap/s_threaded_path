@@ -86,9 +86,13 @@ void calc_best_path_n() { //U: Calculates the best path without using multithrea
 }
 
 int main() {
-    for (struct Point& point : Points) { //U: Randomly positions the buttons in a square of side 10
+    cout << "POINTS:";
+    for (int i = 0; i < TOTAL_POINTS; ++i) { //U: Randomly positions the buttons in a square of side 10
+        struct Point& point = Points[i];
         point.x = RandomFloat(0, 10); point.y = RandomFloat(0, 10);
+        cout << ' ' << i << " (" << point.x << ", " << point.y << ')';
     }
+    cout << endl;
 
     Best.basic(); //A: Resetting Best
     calc_best_path_th();

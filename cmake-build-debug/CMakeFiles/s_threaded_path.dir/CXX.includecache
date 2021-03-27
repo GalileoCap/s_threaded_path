@@ -7,6 +7,14 @@
 #IncludeRegexTransform: 
 
 /home/galileo/devel/projects/s_threaded_path/main.cpp
+thread
+-
 iostream
+-
+string
+-
+time.h
+-
+unistd.h
 -
 

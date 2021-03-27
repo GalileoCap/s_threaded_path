@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/s_threaded_path.dir/main.cpp.o  -o s_threaded_path 
+/usr/bin/c++   -std=c++11 -pthread -g   CMakeFiles/s_threaded_path.dir/main.cpp.o  -o s_threaded_path 

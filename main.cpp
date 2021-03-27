@@ -6,7 +6,9 @@
 #include <iostream>
 using namespace std;
 
-#define TOTAL_POINTS 10
+#define TOTAL_POINTS 11
+
+thread Threads[TOTAL_POINTS];
 
 struct Point {
     bool visited = false;
@@ -60,6 +62,19 @@ void calc_best_path(const struct Path &path, const int &depth) { //U: Calculates
     }
 }
 
+void calc_best_path_th() { //U: Calculates the best path using multithreading
+    const time_t time0 = time(0);
+
+    for (int i = 0; i < TOTAL_POINTS; ++i) { //U: Crates a thread for each starting point
+        struct Path p; p.basic(); p.path[0] = i; p.points[i].visited = true; //A: Start from point i
+        thread& t = Threads[i]; t = thread(&calc_best_path, p, 1);
+    }
+
+    for (thread& t : Threads) { t.join(); } //A: Wait for all the threads to be done
+    const time_t time1 = time(0) - time0;
+    cout << "THREADED BEST PATH IN " << time1 << ' '; Best.print(TOTAL_POINTS - 1);
+}
+
 void calc_best_path_n() { //U: Calculates the best path without using multithreading
     const time_t time0 = time(0);
 
@@ -71,11 +86,15 @@ void calc_best_path_n() { //U: Calculates the best path without using multithrea
 }
 
 int main() {
-    for (struct Point& point : Points) {
+    for (struct Point& point : Points) { //U: Randomly positions the buttons in a square of side 10
         point.x = RandomFloat(0, 10); point.y = RandomFloat(0, 10);
     }
 
     Best.basic(); //A: Resetting Best
+    calc_best_path_th();
+
+    Best.basic(); //A: Resetting Best
     calc_best_path_n();
+
     return 0;
 }
